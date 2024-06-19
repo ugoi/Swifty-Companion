@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/i_auth_service.dart';
 import 'package:swifty_companion/school_service_facade.dart';
 import 'package:swifty_companion/logging_setup.dart';
@@ -16,11 +12,9 @@ class MockBaseClient extends Mock implements http.BaseClient {}
 void main() {
   late MockClientManager mockOAuth2ClientManager;
   late SchoolServiceFacade schoolService;
-  late MockBaseClient mockBaseClient;
 
   setUp(() {
     mockOAuth2ClientManager = MockClientManager();
-    mockBaseClient = MockBaseClient();
     schoolService = SchoolServiceFacade(clientManager: mockOAuth2ClientManager);
   });
 
@@ -34,7 +28,7 @@ void main() {
         final client = MockBaseClient();
         bool isCompleted = false;
         when(() => mockOAuth2ClientManager.createClient())
-            .thenAnswer((_) async => Future.delayed(Duration(seconds: 2), () {
+            .thenAnswer((_) async => Future.delayed(const Duration(seconds: 2), () {
                   isCompleted = true;
                   return client;
                 }));
