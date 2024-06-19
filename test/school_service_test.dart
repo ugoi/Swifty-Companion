@@ -1,28 +1,34 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/i_client_manager.dart';
-import 'package:swifty_companion/school_service.dart';
+import 'package:swifty_companion/dtos/search_user_dto.dart';
+import 'package:swifty_companion/i_auth_service.dart';
+import 'package:swifty_companion/school_service_facade.dart';
 import 'package:swifty_companion/logging_setup.dart';
 import 'package:http/http.dart' as http;
 
-class MockClientManager extends Mock implements IClientManager {}
+class MockClientManager extends Mock implements IAuthService {}
 
 class MockBaseClient extends Mock implements http.BaseClient {}
 
 void main() {
   late MockClientManager mockOAuth2ClientManager;
-  late SchoolService schoolService;
+  late SchoolServiceFacade schoolService;
+  late MockBaseClient mockBaseClient;
 
   setUp(() {
     mockOAuth2ClientManager = MockClientManager();
-    schoolService = SchoolService(clientManager: mockOAuth2ClientManager);
+    mockBaseClient = MockBaseClient();
+    schoolService = SchoolServiceFacade(clientManager: mockOAuth2ClientManager);
   });
 
   setUpAll(() {
     setupLogging();
   });
 
-  group('SchoolService', () {
+  group('SchoolServiceFacade', () {
     group('loginWith42', () {
       test('is successful', () async {
         final client = MockBaseClient();

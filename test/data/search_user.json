@@ -1,0 +1,37 @@
+[
+    {
+        "id": 133113,
+        "email": "sdukic@student.42lausanne.ch",
+        "login": "sdukic",
+        "first_name": "Stefan",
+        "last_name": "Dukic",
+        "usual_full_name": "Stefan Dukic",
+        "usual_first_name": null,
+        "url": "https://api.intra.42.fr/v2/users/sdukic",
+        "phone": "hidden",
+        "displayname": "Stefan Dukic",
+        "kind": "student",
+        "image": {
+            "link": "https://cdn.intra.42.fr/users/9f4f94354e51110de5b62c3d91d99303/sdukic.jpg",
+            "versions": {
+                "large": "https://cdn.intra.42.fr/users/b5992e8c60c9dcc9eb02f3d57155bf85/large_sdukic.jpg",
+                "medium": "https://cdn.intra.42.fr/users/490952a161327721163774570f5fa51d/medium_sdukic.jpg",
+                "small": "https://cdn.intra.42.fr/users/88dfc460d9e409f0eb10b3469a3dc098/small_sdukic.jpg",
+                "micro": "https://cdn.intra.42.fr/users/871fb28b3af4de2388bda8839376c33a/micro_sdukic.jpg"
+            }
+        },
+        "staff?": false,
+        "correction_point": 4,
+        "pool_month": "september",
+        "pool_year": "2022",
+        "location": null,
+        "wallet": 885,
+        "anonymize_date": "2027-06-18T00:00:00.000+02:00",
+        "data_erasure_date": "2027-06-18T00:00:00.000+02:00",
+        "created_at": "2022-09-05T11:50:03.900Z",
+        "updated_at": "2024-05-07T10:13:14.151Z",
+        "alumnized_at": null,
+        "alumni?": false,
+        "active?": true
+    }
+]

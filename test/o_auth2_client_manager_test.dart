@@ -1,36 +1,39 @@
 import 'package:file/memory.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/o_auth2_client_manager.dart';
+import 'package:swifty_companion/o_auth2_service.dart';
 import 'package:http/http.dart' as http;
 
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
-  late OAuth2ClientManager oAuth2ClientManager;
+  late OAuth2Service oAuth2ClientManager;
   late MockHttpClient mockHttpClient;
+  const String credentialsFilePath = '/credentials.json';
+  late MemoryFileSystem memoryFileSystem;
 
   setUpAll(() {
     registerFallbackValue(Uri.parse(''));
   });
 
   setUp(() {
+    memoryFileSystem = MemoryFileSystem();
     mockHttpClient = MockHttpClient();
-    oAuth2ClientManager = OAuth2ClientManager(
+    oAuth2ClientManager = OAuth2Service(
         redirect: (Uri uri) => Future<void>.value(),
         listen: (Uri uri) => Future<Uri>.value(Uri.parse(
             "https://example.com/oauth2/callback?code=AUTHORIZATION_CODE&state=STATE")),
-        fileSystem: MemoryFileSystem(),
+        fileSystem: memoryFileSystem,
         authorizationEndpoint: "http://example.com/oauth2/authorization",
         tokenEndpoint: 'http://example.com/oauth2/token',
         identifier: 'my client identifier',
         secret: 'my client secret',
         redirectUrl: 'http://my-site.com/oauth2-redirect',
-        credentialsFilePath: '~/.myapp/credentials.json',
+        credentialsFilePath: credentialsFilePath,
         httpClient: mockHttpClient);
   });
 
-  group('OAuth2ClientManager', () {
+  group('OAuth2Service', () {
     test('creates client', () async {
       final responseHeaders = {'content-type': 'application/json'};
       final responseBody =
@@ -44,6 +47,12 @@ void main() {
           body: any(named: 'body'))).thenAnswer((_) async => response);
       final http.Client client = await oAuth2ClientManager.createClient();
 
+      final credentialsFile = memoryFileSystem.file(credentialsFilePath);
+
+      var exists = await credentialsFile.exists();
+
+      expect(exists, isTrue);
+
       expect(client, isA<http.Client>());
     });
 
@@ -54,11 +63,16 @@ void main() {
       http.Response response =
           http.Response(responseBody, 400, headers: responseHeaders);
 
-      when(() => mockHttpClient.post(any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'))).thenAnswer((_) async => response);
+      when(() => mockHttpClient.post(
+            any(),
+            headers: any(named: 'headers'),
+            body: any(named: 'body'),
+          )).thenAnswer((_) async => response);
 
-      expect(() async => oAuth2ClientManager.createClient(), throwsException);
+      // final client = await oAuth2ClientManager.createClient();
+
+      expect(() async => await oAuth2ClientManager.createClient(),
+          throwsException);
     });
   });
 }

@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
 
-abstract class IClientManager {
+abstract class IAuthService {
   Future<http.BaseClient> createClient();
 }

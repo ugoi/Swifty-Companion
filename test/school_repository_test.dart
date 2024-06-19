@@ -7,10 +7,10 @@ import 'package:swifty_companion/entities/search_user.dart';
 import 'package:swifty_companion/entities/user_data.dart';
 import 'package:swifty_companion/entities/user_image.dart';
 import 'package:swifty_companion/school_repository.dart';
-import 'package:swifty_companion/school_service.dart';
+import 'package:swifty_companion/school_service_facade.dart';
 import 'package:swifty_companion/logging_setup.dart';
 
-class MockSchoolService extends Mock implements SchoolService {}
+class MockSchoolService extends Mock implements SchoolServiceFacade {}
 
 void main() {
   late SchoolRepository schoolRepository;
@@ -27,7 +27,7 @@ void main() {
 
   group('SchoolRepository', () {
     group('loginWith42', () {
-      test('calls loginWith42() from SchoolService', () async {
+      test('calls loginWith42() from SchoolServiceFacade', () async {
         when(() => mockSchoolService.loginWith42())
             .thenAnswer((_) async => Future.value());
 
@@ -45,9 +45,9 @@ void main() {
 
     group('getUserData', () {
       test('throws exception if school service throws error', () async {
-        when(() => mockSchoolService.getUser()).thenThrow(TypeError());
+        when(() => mockSchoolService.getUser("1")).thenThrow(TypeError());
 
-        expect(schoolRepository.getUserData(), throwsException);
+        expect(schoolRepository.getUserData("1"), throwsException);
       });
 
       // Took me 1 hour to write this test
@@ -61,7 +61,7 @@ void main() {
             location: "testLocation",
             profilePicture: UserImage(url: "testUrl"));
 
-        when(() => mockSchoolService.getUser())
+        when(() => mockSchoolService.getUser("1"))
             .thenAnswer((_) async => Future.value(user_dto.UserDto(
                   login: expectedProfile.login,
                   firstName: expectedProfile.firstName,
@@ -79,7 +79,7 @@ void main() {
                   url: expectedProfile.profilePicture.url,
                 )));
 
-        final result = await schoolRepository.getUserData();
+        final result = await schoolRepository.getUserData("1");
         final profile = result.profile;
 
         expect(profile.login, expectedProfile.login);
@@ -99,7 +99,7 @@ void main() {
               level: Level(level: 7.68, maxLevel: 20), name: "TestRigor", id: 4)
         ];
 
-        when(() => mockSchoolService.getUser()).thenAnswer(
+        when(() => mockSchoolService.getUser("1")).thenAnswer(
             (_) async => Future.value(user_dto.UserDto(cursusUsers: [
                   user_dto.CursusUser(grade: "AntiMember", skills: [
                     user_dto.Skill(id: 2, name: "AntiTest1", level: 5.68),
@@ -111,7 +111,7 @@ void main() {
                   ]),
                 ])));
 
-        final result = await schoolRepository.getUserData();
+        final result = await schoolRepository.getUserData("1");
         final skill = result.skills[0];
 
         expect(result.skills.length, equals(2));

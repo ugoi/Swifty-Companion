@@ -1,13 +1,13 @@
 import 'package:logging/logging.dart';
 import 'package:swifty_companion/entities/search_user.dart';
 import 'package:swifty_companion/entities/user_data.dart';
-import 'package:swifty_companion/school_service.dart';
+import 'package:swifty_companion/school_service_facade.dart';
 
 class SchoolRepository {
-  final SchoolService _schoolService;
+  final SchoolServiceFacade _schoolService;
   final Logger _logger = Logger("SchoolRepository");
 
-  SchoolRepository({required SchoolService schoolService})
+  SchoolRepository({required SchoolServiceFacade schoolService})
       : _schoolService = schoolService;
 
   Future<void> loginWith42() async {
@@ -20,9 +20,9 @@ class SchoolRepository {
   }
 
   // Took me 1 hour to write this and its subroutines
-  Future<UserData> getUserData() async {
+  Future<UserData> getUserData(String id) async {
     try {
-      final userDto = await _schoolService.getUser();
+      final userDto = await _schoolService.getUser(id);
       return UserData.fromUserDto(userDto);
     } catch (e, stackTrace) {
       // log error
@@ -40,7 +40,8 @@ class SchoolRepository {
           .map((e) => SearchUser.fromSearchUserDtos(e))
           .toList();
     } catch (e, stackTrace) {
-      _logger.severe('searchUsers(String query) failed to fetch user data', e, stackTrace);
+      _logger.severe(
+          'searchUsers(String query) failed to fetch user data', e, stackTrace);
       throw Exception('getUserData() failed to fetch user data');
     }
   }
