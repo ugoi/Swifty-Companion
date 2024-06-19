@@ -36,7 +36,7 @@ void main() {
   group('OAuth2Service', () {
     test('creates client', () async {
       final responseHeaders = {'content-type': 'application/json'};
-      final responseBody =
+      const responseBody =
           '{"access_token": "ACCESS_TOKEN_VALUE", "token_type": "bearer", "expires_in": 3600, "refresh_token": "REFRESH_TOKEN_VALUE"}';
 
       http.Response response =
@@ -58,7 +58,7 @@ void main() {
 
     test('throws error', () async {
       final responseHeaders = {'content-type': 'application/json'};
-      final responseBody = '{"error": "invalid_request"}';
+      const responseBody = '{"error": "invalid_request"}';
 
       http.Response response =
           http.Response(responseBody, 400, headers: responseHeaders);

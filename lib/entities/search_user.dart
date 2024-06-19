@@ -9,7 +9,7 @@ class SearchUser {
 
   SearchUser({String? login, UserImage? profilePicture})
       : login = login ?? _notFound,
-        profilePicture = profilePicture ?? UserImage();
+        profilePicture = profilePicture ?? const UserImage();
 
   factory SearchUser.fromSearchUserDtos(SearchUserDto searchUserDtos) {
     return SearchUser(

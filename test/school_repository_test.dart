@@ -59,7 +59,7 @@ void main() {
             email: "testEmail",
             level: 9,
             location: "testLocation",
-            profilePicture: UserImage(url: "testUrl"));
+            profilePicture: const UserImage(url: "testUrl"));
 
         when(() => mockSchoolService.getUser("1"))
             .thenAnswer((_) async => Future.value(user_dto.UserDto(

@@ -1,5 +1,7 @@
 // logging_setup.dart
 
+// ignore_for_file: avoid_print
+
 import 'package:logging/logging.dart';
 
 void setupLogging() {

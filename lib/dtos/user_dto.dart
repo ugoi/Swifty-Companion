@@ -3,6 +3,8 @@
 //
 //     final userDto = userDtoFromJson(jsonString);
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 UserDto userDtoFromJson(String str) => UserDto.fromJson(json.decode(str));

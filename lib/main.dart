@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final String assetName = 'assets/icons/42_logo.svg';
+    const String assetName = 'assets/icons/42_logo.svg';
     final Widget logo42 = SvgPicture.asset(assetName,
         semanticsLabel: 'Acme Logo',
         fit: BoxFit.scaleDown,
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                   child: ElevatedButton.icon(
-                icon: Icon(Icons.school),
+                icon: const Icon(Icons.school),
                 label: const Text("Continue with 42"),
                 onPressed: () => school?.login(),
               ))
