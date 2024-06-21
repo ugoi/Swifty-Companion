@@ -35,17 +35,8 @@ void main() {
 
   group('OAuth2Service', () {
     test('creates client', () async {
-      final responseHeaders = {'content-type': 'application/json'};
-      const responseBody =
-          '{"access_token": "ACCESS_TOKEN_VALUE", "token_type": "bearer", "expires_in": 3600, "refresh_token": "REFRESH_TOKEN_VALUE"}';
-
-      http.Response response =
-          http.Response(responseBody, 200, headers: responseHeaders);
-
-      when(() => mockHttpClient.post(any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'))).thenAnswer((_) async => response);
-      final http.Client client = await oAuth2ClientManager.createClient();
+      http.Client client =
+          await createMockClient(mockHttpClient, oAuth2ClientManager);
 
       final credentialsFile = memoryFileSystem.file(credentialsFilePath);
 
@@ -74,5 +65,37 @@ void main() {
       expect(() async => await oAuth2ClientManager.createClient(),
           throwsException);
     });
+
+    test('isAuthenticated returns correct value', () async {
+      expect(await oAuth2ClientManager.isAuthenticated(), false);
+
+      await createMockClient(mockHttpClient, oAuth2ClientManager);
+
+      expect(await oAuth2ClientManager.isAuthenticated(), true);
+    });
+
+    test('logout()', () async {
+      await createMockClient(mockHttpClient, oAuth2ClientManager);
+
+      oAuth2ClientManager.logout();
+
+      expect(await oAuth2ClientManager.isAuthenticated(), false);
+    });
   });
+}
+
+Future<http.Client> createMockClient(
+    MockHttpClient mockHttpClient, OAuth2Service oAuth2ClientManager) async {
+  final responseHeaders = {'content-type': 'application/json'};
+  const responseBody =
+      '{"access_token": "ACCESS_TOKEN_VALUE", "token_type": "bearer", "expires_in": 3600, "refresh_token": "REFRESH_TOKEN_VALUE"}';
+
+  http.Response response =
+      http.Response(responseBody, 200, headers: responseHeaders);
+
+  when(() => mockHttpClient.post(any(),
+      headers: any(named: 'headers'),
+      body: any(named: 'body'))).thenAnswer((_) async => response);
+  final http.Client client = await oAuth2ClientManager.createClient();
+  return client;
 }

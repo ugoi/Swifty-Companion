@@ -30,6 +30,7 @@ class SchoolRepositoryFactory {
 
         // Subscribe to all events (initial link and further)
         appLinks.uriLinkStream.listen((uri) {
+          print('onAppLink: $uri');
           completer.complete(uri);
         });
 

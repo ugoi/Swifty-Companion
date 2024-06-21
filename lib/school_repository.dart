@@ -19,6 +19,14 @@ class SchoolRepository {
     }
   }
 
+  Future<bool> isAuthenticated() async {
+    return _schoolService.isAuthenticated();
+  }
+
+  Future<void> logout() async {
+    return _schoolService.logout();
+  }
+
   // Took me 1 hour to write this and its subroutines
   Future<UserData> getUserData(String id) async {
     try {

@@ -17,6 +17,14 @@ class SchoolServiceFacade {
     return;
   }
 
+  Future<bool> isAuthenticated() async {
+    return _authService.isAuthenticated();
+  }
+
+  Future<void> logout() async {
+    return _authService.logout();
+  }
+
   Future<UserDto> getUser(String id) async {
     if (_schoolDataService == null) {
       throw Exception("Not logged in");

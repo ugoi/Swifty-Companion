@@ -96,4 +96,23 @@ class OAuth2Service implements IAuthService {
       throw Exception('Failed to create OAuth2 client: $e');
     }
   }
+
+  @override
+  Future<bool> isAuthenticated() async {
+    final credentialsFile = _fileSystem.file(_credentialsFilePath);
+    var exists = await credentialsFile.exists();
+    // If the OAuth2 credentials have already been saved from a previous run, we
+    // ust want to reload them.
+    if (exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    final credentialsFile = _fileSystem.file(_credentialsFilePath);
+    credentialsFile.delete();
+  }
 }
