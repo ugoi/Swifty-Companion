@@ -22,11 +22,9 @@ class SplashPage extends StatelessWidget {
                   Container(
                     child: logo42,
                   ),
-                  Container(
-                    child: const Text(
-                      'Swifty Companion',
-                      textDirection: TextDirection.ltr,
-                    ),
+                  const Text(
+                    'Swifty Companion',
+                    textDirection: TextDirection.ltr,
                   )
                 ],
               ),

@@ -52,9 +52,11 @@ class HomePage extends StatelessWidget {
             child: TextButton.icon(
                 onPressed: () async {
                   await school?.logout();
-                  Navigator.pop(context);
+                  if (context.mounted) {
+                    Navigator.pushNamed(context, Paths.login);
+                  }
                 },
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 label: const Text("Logout")),
           ),
 
@@ -72,13 +74,13 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     itemCount: entries.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
+                      return SizedBox(
                         height: 50,
                         child: Center(child: Text('Entry ${entries[index]}')),
                       );
                     }),
               ),
-              Container(
+              const SizedBox(
                 height: 40,
                 child: SearchBar(),
               )

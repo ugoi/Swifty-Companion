@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/icons.dart';
 import 'package:swifty_companion/paths.dart';
@@ -22,20 +21,17 @@ class LoginPage extends StatelessWidget {
               Container(
                 child: logo42,
               ),
-              Container(
-                child: const Text(
-                  'Swifty Companion',
-                ),
+              const Text(
+                'Swifty Companion',
               ),
-              Container(
-                  child: ElevatedButton.icon(
+              ElevatedButton.icon(
                 icon: const Icon(Icons.school),
                 label: const Text("Continue with 42"),
                 onPressed: () async {
                   await school?.login();
-                  Navigator.pushNamed(context, Paths.home);
+                  if (context.mounted) Navigator.pushNamed(context, Paths.home);
                 },
-              )),
+              ),
             ],
           ),
         ),

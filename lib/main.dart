@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/environment.dart';
 import 'package:swifty_companion/home_page.dart';
@@ -30,8 +29,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<SchoolModel>(builder: (context, school, child) {
       return FutureBuilder(
-          future: Future.delayed(
-              Duration(seconds: 2), () async => await school.initialRoute),
+          future: Future.delayed(const Duration(seconds: 2),
+              () async => await school.initialRoute),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return MaterialApp(
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
 
                   // Define the default brightness and colors.
                   colorScheme: ColorScheme.fromSeed(
-                    seedColor: Color(0xFF41C9C9),
+                    seedColor: const Color(0xFF41C9C9),
                     // ···
                     brightness: Brightness.dark,
                   ),
@@ -49,68 +48,49 @@ class MyApp extends StatelessWidget {
                   // text styling for headlines, titles, bodies of text, and more.
                 ),
                 initialRoute: snapshot.data,
-                routes: {
-                  Paths.login: (context) => const LoginPage(),
-                  Paths.home: (context) => HomePage(),
-                  Paths.splash: (context) => const SplashPage(),
+                // routes: {
+                //   Paths.login: (context) => const LoginPage(),
+                //   Paths.home: (context) => const HomePage(),
+                //   Paths.splash: (context) => const SplashPage(),
+                // },
+
+                onGenerateRoute: (settings) {
+                  switch (settings.name) {
+                    case Paths.login:
+                      return _createLoginPageRoute();
+                    case Paths.home:
+                      return MaterialPageRoute(
+                          builder: (context) => const HomePage());
+                    case Paths.splash:
+                      return MaterialPageRoute(
+                          builder: (context) => const SplashPage());
+                    default:
+                      return null;
+                  }
                 },
               );
             } else {
-              return SplashPage();
+              return const SplashPage();
             }
           });
     });
   }
 }
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
+Route _createLoginPageRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const LoginPage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(-1.0, 0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
 
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   void _incrementCounter() {
-//     setState(() {});
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<SchoolModel>(builder: (context, school, child) {
-//       return FutureBuilder(
-//           future: Future.delayed(
-//               Duration(seconds: 2), () async => await school.initialRoute),
-//           builder: (context, snapshot) {
-//             if (snapshot.hasData) {
-//               return MaterialApp(
-//                 darkTheme: ThemeData(
-//                     brightness: Brightness.dark,
-//                     colorScheme: ColorScheme.fromSeed(
-//                         seedColor: Color.fromARGB(1, 255, 0, 0))),
-//                 themeMode: ThemeMode.dark,
-//                 initialRoute: snapshot.data,
-//                 routes: {
-//                   Paths.login: (context) => const LoginPage(),
-//                   Paths.home: (context) => HomePage(),
-//                   Paths.splash: (context) => const SplashPage(),
-//                 },
-//               );
-//             } else {
-//               return SplashPage();
-//             }
-//           });
-//     });
-//   }
-// }
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
