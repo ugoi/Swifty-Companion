@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/environment.dart';
-import 'package:swifty_companion/home_page.dart';
+import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/logging_setup.dart';
-import 'package:swifty_companion/login_page.dart';
+import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/paths.dart';
 import 'package:swifty_companion/school_model.dart';
 import 'package:swifty_companion/school_repository_factory.dart';
-import 'package:swifty_companion/splash_page.dart';
+import 'package:swifty_companion/pages/splash_page.dart';
+import 'package:swifty_companion/theme/theme.dart';
 
 Future main() async {
   WidgetsFlutterBinding
@@ -28,51 +29,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<SchoolModel>(builder: (context, school, child) {
-      return FutureBuilder(
-          future: Future.delayed(const Duration(seconds: 2),
-              () async => await school.initialRoute),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return MaterialApp(
-                theme: ThemeData(
-                  useMaterial3: true,
-
-                  // Define the default brightness and colors.
-                  colorScheme: ColorScheme.fromSeed(
-                    seedColor: const Color(0xFF41C9C9),
-                    // ···
-                    brightness: Brightness.dark,
-                  ),
-
-                  // Define the default `TextTheme`. Use this to specify the default
-                  // text styling for headlines, titles, bodies of text, and more.
-                ),
-                initialRoute: snapshot.data,
-                // routes: {
-                //   Paths.login: (context) => const LoginPage(),
-                //   Paths.home: (context) => const HomePage(),
-                //   Paths.splash: (context) => const SplashPage(),
-                // },
-
-                onGenerateRoute: (settings) {
-                  switch (settings.name) {
-                    case Paths.login:
-                      return _createLoginPageRoute();
-                    case Paths.home:
-                      return MaterialPageRoute(
-                          builder: (context) => const HomePage());
-                    case Paths.splash:
-                      return MaterialPageRoute(
-                          builder: (context) => const SplashPage());
-                    default:
-                      return null;
-                  }
-                },
-              );
-            } else {
-              return const SplashPage();
-            }
-          });
+      return MaterialApp(
+        theme: darkMode,
+        initialRoute: Paths.splash,
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case Paths.login:
+              return _createLoginPageRoute();
+            case Paths.home:
+              return MaterialPageRoute(builder: (context) => const HomePage());
+            case Paths.splash:
+              return MaterialPageRoute(
+                  builder: (context) => const SplashPage());
+            default:
+              return null;
+          }
+        },
+      );
     });
   }
 }
