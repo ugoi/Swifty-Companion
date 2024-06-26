@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/environment.dart';
-import 'package:swifty_companion/pages/home_page.dart';
+import 'package:swifty_companion/pages/search_page.dart';
 import 'package:swifty_companion/logging_setup.dart';
 import 'package:swifty_companion/pages/login_page.dart';
+import 'package:swifty_companion/pages/student_page.dart';
 import 'package:swifty_companion/paths.dart';
-import 'package:swifty_companion/school_model.dart';
+import 'package:swifty_companion/change_notifier/school_model.dart';
 import 'package:swifty_companion/school_repository_factory.dart';
 import 'package:swifty_companion/pages/splash_page.dart';
 import 'package:swifty_companion/theme/theme.dart';
@@ -31,18 +32,31 @@ class MyApp extends StatelessWidget {
     return Consumer<SchoolModel>(builder: (context, school, child) {
       return MaterialApp(
         theme: darkMode,
-        initialRoute: Paths.splash,
+        initialRoute: PathEnum.splash.path,
         onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case Paths.login:
-              return _createLoginPageRoute();
-            case Paths.home:
-              return MaterialPageRoute(builder: (context) => const HomePage());
-            case Paths.splash:
-              return MaterialPageRoute(
-                  builder: (context) => const SplashPage());
-            default:
-              return null;
+          // switch (settings.name) {
+          //   case Paths.login:
+          //     return _createLoginPageRoute();
+          //   case Paths.search:
+          //     return MaterialPageRoute(
+          //         builder: (context) => const SearchPage());
+          //   case Paths.splash:
+          //     return MaterialPageRoute(
+          //         builder: (context) => const SplashPage());
+          //   default:
+          //     return null;
+          // }
+
+          if (settings.name == PathEnum.login.path) {
+            return _createLoginPageRoute();
+          } else if (settings.name == PathEnum.search.path) {
+            return MaterialPageRoute(builder: (context) => const SearchPage());
+          } else if (settings.name == PathEnum.splash.path) {
+            return MaterialPageRoute(builder: (context) => const SplashPage());
+          } else if (settings.name == PathEnum.student.path) {
+            return MaterialPageRoute(builder: (context) => const StudentPage());
+          } else {
+            return null;
           }
         },
       );

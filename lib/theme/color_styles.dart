@@ -39,6 +39,7 @@ class LightColorStyles {
   static const int _cardSecondary = 0xFFE0E0E0;
   static const int _success = 0xFF41C94C;
   static const int _alert = 0xFFD44760;
+  static const int _listBorder = 0xFF323235;
 
   static int get primary => _primary;
   static int get background => _background;
@@ -50,4 +51,5 @@ class LightColorStyles {
   static int get cardSecondary => _cardSecondary;
   static int get success => _success;
   static int get alert => _alert;
+  static int get listBorder => _listBorder;
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/custom_icons.dart';
-import 'package:swifty_companion/school_model.dart';
+import 'package:swifty_companion/change_notifier/school_model.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -18,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
     Future.delayed(const Duration(seconds: 2), () {
       final school = Provider.of<SchoolModel>(context, listen: false);
       school.initialRoute.then((value) {
-        Navigator.pushReplacementNamed(context, value);
+        Navigator.pushReplacementNamed(context, value.path);
       });
     });
   }
@@ -43,8 +43,7 @@ class _SplashPageState extends State<SplashPage> {
                     height: 60,
                     width: 60,
                     colorFilter: ColorFilter.mode(
-                        Theme.of(context).colorScheme.primary,
-                        BlendMode.srcIn),
+                        Theme.of(context).colorScheme.primary, BlendMode.srcIn),
                   ),
                   Text(
                     'Swifty Companion',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:swifty_companion/theme/color_styles.dart';
 
 ThemeData lightMode = ThemeData(
@@ -12,6 +13,7 @@ ThemeData darkMode = ThemeData(
     // searchBarTheme: SearchBarThemeData(),
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Color(DarkColorStyles.background),
+    textTheme: GoogleFonts.poppinsTextTheme(const TextTheme()),
     searchBarTheme: SearchBarThemeData(
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
@@ -20,6 +22,11 @@ ThemeData darkMode = ThemeData(
       ),
     ),
     colorScheme: ColorScheme.dark(
-        surface: Color(DarkColorStyles.background),
-        primary: Color(DarkColorStyles.highlight),
-        secondary: const Color.fromARGB(255, 122, 122, 122)));
+      surface: Color(DarkColorStyles.background),
+      primary: Color(DarkColorStyles.highlight),
+      secondary: Color(DarkColorStyles.primary),
+      surfaceContainer: Color(DarkColorStyles.card),
+      surfaceContainerLow: Color(DarkColorStyles.cardSecondary),
+      tertiary: Color(DarkColorStyles.success),
+      outline: Color(DarkColorStyles.border),
+    ));

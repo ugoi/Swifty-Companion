@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/custom_icons.dart';
 import 'package:swifty_companion/paths.dart';
-import 'package:swifty_companion/school_model.dart';
+import 'package:swifty_companion/change_notifier/school_model.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () async {
                         await school?.login();
                         if (context.mounted) {
-                          Navigator.pushNamed(context, Paths.home);
+                          Navigator.pushNamed(context, PathEnum.search.path);
                         }
                       },
                     ),

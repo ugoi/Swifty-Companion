@@ -5,33 +5,20 @@ import 'package:swifty_companion/school_repository.dart';
 class SchoolModel extends ChangeNotifier {
   final SchoolRepository _schoolRepository;
 
-  String _initialRoute = Paths.splash;
+  PathEnum _initialRoute = PathEnum.splash;
 
   SchoolModel({required SchoolRepository schoolRepository})
       : _schoolRepository = schoolRepository;
 
   String get test => "Test";
 
-  Future<String> get initialRoute async {
-    // func() async {
-    //   bool isAuth = await _schoolRepository.isAuthenticated();
-    //   if (!isAuth && _initialRoute != Paths.login) {
-    //     _initialRoute = Paths.login;
-    //     notifyListeners();
-    //   } else if (_initialRoute != Paths.home) {
-    //     _initialRoute = Paths.home;
-    //     notifyListeners();
-    //   }
-    // }
-
-    // func();
-
+  Future<PathEnum> get initialRoute async {
     bool isAuth = await _schoolRepository.isAuthenticated();
 
     if (isAuth) {
-      _initialRoute = Paths.home;
+      _initialRoute = PathEnum.search;
     } else {
-      _initialRoute = Paths.login;
+      _initialRoute = PathEnum.login;
     }
     return _initialRoute;
   }
