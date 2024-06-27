@@ -18,7 +18,8 @@ class SchoolDataService {
     final response = await _client.get(Uri(
         scheme: 'https',
         host: 'api.intra.42.fr',
-        path: '/v2/users?filter[login]=sdukic&filter[kind]=student'));
+        path: '/v2/users',
+        queryParameters: {'filter[login]': query, 'filter[kind]': 'student'}));
 
     return searchUserDtoFromJson(response.body);
   }

@@ -1,16 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/custom_icons.dart';
 import 'package:swifty_companion/change_notifier/school_model.dart';
+import 'package:swifty_companion/entities/user_data.dart';
 
 class StudentPage extends StatelessWidget {
   const StudentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SchoolModel?>(builder: (context, school, child) {
+    return Consumer<SchoolModel>(builder: (context, school, child) {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.surface,
@@ -28,13 +28,53 @@ class StudentPage extends StatelessWidget {
           ),
           leadingWidth: 300,
         ),
-        body: const Center(
+        body: Center(
             child: Padding(
-          padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
-          child: Column(
-            children: [Profile(), SizedBox(height: 20), Portfolio()],
-          ),
-        )),
+                padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
+                child: FutureBuilder(
+                    future: school.userData,
+                    builder: (context, snapshot) {
+                      List<Widget> children;
+                      if (snapshot.hasData) {
+                        children = [
+                          Profile(
+                            profile: snapshot.data!.profile,
+                          ),
+                          const SizedBox(height: 20),
+                          Portfolio(
+                              projects: snapshot.data!.projects,
+                              skills: snapshot.data!.skills)
+                        ];
+                      } else if (snapshot.hasError) {
+                        children = <Widget>[
+                          const Icon(
+                            Icons.error_outline,
+                            color: Colors.red,
+                            size: 60,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: Text('Error: ${snapshot.error}'),
+                          ),
+                        ];
+                      } else {
+                        children = const <Widget>[
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircularProgressIndicator(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 16),
+                            child: Text('Awaiting result...'),
+                          ),
+                        ];
+                      }
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: children,
+                      );
+                    }))),
       );
     });
   }
@@ -42,9 +82,9 @@ class StudentPage extends StatelessWidget {
 
 //DONE
 class Profile extends StatelessWidget {
-  const Profile({
-    super.key,
-  });
+  const Profile({super.key, required this.profile});
+
+  final ProfileEntity profile;
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +107,9 @@ class Profile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("mmuster", style: Theme.of(context).textTheme.bodyLarge),
-                  const Text("Unavailable"),
+                  Text(profile.login,
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  Text(profile.location),
                 ],
               )
             ],
@@ -78,7 +119,8 @@ class Profile extends StatelessWidget {
           height: 10,
         ),
         LinearPercentIndicator(
-          center: const Text("level 12 - 42%"),
+          center: Text(
+              "level ${profile.level.level.toStringAsFixed(0)} - ${profile.level.toPercentage().toStringAsFixed(0)}%"),
           padding: EdgeInsets.zero,
           barRadius: const Radius.circular(15),
           lineHeight: 20,
@@ -92,7 +134,7 @@ class Profile extends StatelessWidget {
         Column(
           children: [
             InfoCard(
-              text: const Text("Max Mustermann"),
+              text: Text('${profile.firstName} ${profile.lastName}'),
               icon: Icon(
                 Icons.person,
                 color: Theme.of(context).colorScheme.primary,
@@ -101,12 +143,12 @@ class Profile extends StatelessWidget {
             InfoCard(
               icon: Icon(Icons.mail,
                   color: Theme.of(context).colorScheme.primary),
-              text: const Text("mmuster@student.42lausanne.ch"),
+              text: Text(profile.email),
             ),
             InfoCard(
               icon: Icon(Icons.location_on,
                   color: Theme.of(context).colorScheme.primary),
-              text: const Text("Luasanne, Switzerland"),
+              text: Text(profile.location),
             ),
           ],
         )
@@ -137,42 +179,15 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-//NOT STARTED
+//DONE
 class Portfolio extends StatelessWidget {
-  const Portfolio({
-    super.key,
-  });
+  const Portfolio({super.key, required this.projects, required this.skills});
+
+  final List<ProjectEntity> projects;
+  final List<SkillEntity> skills;
 
   @override
   Widget build(BuildContext context) {
-    List entries = [
-      'Transcendence',
-      'Ft_Irc',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z'
-    ];
     return DefaultTabController(
         length: 2,
         child: Expanded(
@@ -196,20 +211,22 @@ class Portfolio extends StatelessWidget {
                   Center(
                     child: ListView.builder(
                         padding: const EdgeInsets.all(8),
-                        itemCount: entries.length,
+                        itemCount: projects.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Project(title: entries[index], score: 100);
+                          return Project(
+                              title: projects[index].name,
+                              score: projects[index].mark.toPercentage());
                         }),
                   ),
                   Center(
                       child: ListView.builder(
                           padding: const EdgeInsets.all(8),
-                          itemCount: entries.length,
+                          itemCount: skills.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Skill(
-                              title: entries[index],
-                              score: 13,
-                              score2: 60,
+                              title: skills[index].name,
+                              score: skills[index].level.level,
+                              score2: skills[index].level.toPercentage(),
                             );
                           }))
                 ]),
@@ -241,20 +258,33 @@ class Skill extends StatelessWidget {
               bottom: BorderSide(
                   color: Theme.of(context).colorScheme.outline, width: 0.25))),
       child: Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
+          Flexible(
+              flex: 2,
+              fit: FlexFit.tight,
               child: Text(
-            title,
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
-          )),
-          Expanded(
+                title,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              )),
+          const SizedBox(
+            width: 2,
+          ),
+          Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
               child: Text(
-            score.toString(),
-            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-          )),
-          Text(
-            score2.toString(),
-            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                score.toString(),
+                style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+              )),
+          Flexible(
+            flex: 1,
+            fit: FlexFit.tight,
+            child: Text(
+              textAlign: TextAlign.right,
+              score2.toStringAsFixed(0),
+              style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+            ),
           )
         ],
       ),

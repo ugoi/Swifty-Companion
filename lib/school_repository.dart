@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:swifty_companion/entities/search_user.dart';
 import 'package:swifty_companion/entities/user_data.dart';
+import 'package:swifty_companion/entities/user_image.dart';
 import 'package:swifty_companion/school_service_facade.dart';
 
 class SchoolRepository {
@@ -42,10 +43,21 @@ class SchoolRepository {
   // Took me 1 hour to write this function
   Future<List<SearchUser>> searchUsers(String query) async {
     try {
-      final searchUserDtos = await _schoolService.searchUsers(query);
+      final searchUserDtos = (await _schoolService.searchUsers(query))
+          .where((e) => e.id != null)
+          .toList();
 
       return searchUserDtos
-          .map((e) => SearchUser.fromSearchUserDtos(e))
+          .map((e) => SearchUser(
+              id: e.id.toString(),
+              login: e.login,
+              profilePicture: UserImage(
+                  url: e.image?.link,
+                  versions: ImageVersions(
+                      large: e.image?.versions?.large,
+                      medium: e.image?.versions?.medium,
+                      micro: e.image?.versions?.micro,
+                      small: e.image?.versions?.small))))
           .toList();
     } catch (e, stackTrace) {
       _logger.severe(

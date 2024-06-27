@@ -8,35 +8,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List entries = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z'
-    ];
-    return Consumer<SchoolModel?>(builder: (context, school, child) {
+    return Consumer<SchoolModel>(builder: (context, school, child) {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.surface,
@@ -45,7 +17,7 @@ class SearchPage extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: TextButton.icon(
                 onPressed: () async {
-                  await school?.logout();
+                  await school.logout();
                   if (context.mounted) {
                     Navigator.pushNamed(context, PathEnum.login.path);
                   }
@@ -64,32 +36,26 @@ class SearchPage extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                     padding: const EdgeInsets.all(8),
-                    itemCount: entries.length,
+                    itemCount: school.searchUsers.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () =>
-                            Navigator.pushNamed(context, PathEnum.student.path),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.outline,
-                                      width: 0.25))),
-                          height: 48,
-                          child: Center(
-                              child: Text(
-                            'Entry ${entries[index]}',
-                          )),
-                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, PathEnum.student.path);
+                          school.onSearchUserClicked(
+                              school.searchUsers[index].id);
+                        },
+                        child:
+                            SearchItem(title: school.searchUsers[index].login),
                       );
                     }),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 40,
                 child: SearchBar(
                   hintText: "Search for a student",
-                  leading: Icon(Icons.search_rounded),
+                  leading: const Icon(Icons.search_rounded),
+                  onSubmitted: (value) async =>
+                      await school.onSearchSubmitted(value),
                 ),
               )
             ],
@@ -97,5 +63,29 @@ class SearchPage extends StatelessWidget {
         )),
       );
     });
+  }
+}
+
+class SearchItem extends StatelessWidget {
+  const SearchItem({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.outline, width: 0.25))),
+      height: 48,
+      child: Center(
+          child: Text(
+        title,
+      )),
+    );
   }
 }

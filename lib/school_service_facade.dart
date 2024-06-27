@@ -11,6 +11,13 @@ class SchoolServiceFacade {
   SchoolServiceFacade({required IAuthService clientManager})
       : _authService = clientManager;
 
+  Future<void> init() async {
+    if (await isAuthenticated()) {
+      http.BaseClient client = await _authService.createClient();
+      _schoolDataService = SchoolDataService(client: client);
+    }
+  }
+
   Future<void> loginWith42() async {
     http.BaseClient client = await _authService.createClient();
     _schoolDataService = SchoolDataService(client: client);

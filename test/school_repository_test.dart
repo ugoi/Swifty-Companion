@@ -52,12 +52,12 @@ void main() {
 
       // Took me 1 hour to write this test
       test('returns correct user profile', () async {
-        final expectedProfile = Profile(
+        final expectedProfile = ProfileEntity(
             login: "testLogin",
             firstName: "testFirstName",
             lastName: "testLastName",
             email: "testEmail",
-            level: 9,
+            level: Level(level: 9, maxLevel: 20),
             location: "testLocation",
             profilePicture: const UserImage(url: "testUrl"));
 
@@ -73,7 +73,7 @@ void main() {
                     user_dto.CursusUser(
                         level: Random().nextDouble(), grade: "Empty"),
                     user_dto.CursusUser(
-                        level: expectedProfile.level, grade: "Member"),
+                        level: expectedProfile.level.level, grade: "Member"),
                   ],
                   location: expectedProfile.location,
                   url: expectedProfile.profilePicture.url,
@@ -94,8 +94,9 @@ void main() {
       // Took me 1 hour to write this test
       test('returns correct user skills', () async {
         final expectedSkills = [
-          Skill(level: Level(level: 4.68, maxLevel: 20), name: "TesWeb", id: 1),
-          Skill(
+          SkillEntity(
+              level: Level(level: 4.68, maxLevel: 20), name: "TesWeb", id: 1),
+          SkillEntity(
               level: Level(level: 7.68, maxLevel: 20), name: "TestRigor", id: 4)
         ];
 
@@ -127,6 +128,7 @@ void main() {
       test('searchUsers returns correct values', () async {
         final expectedSearchUsers = [
           SearchUser(
+              id: "1",
               login: "sdukic",
               profilePicture: const UserImage(
                   url:

@@ -11,9 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 class SchoolRepositoryFactory {
   static final Logger _logger = Logger("SchoolRepositoryFactory");
   static Future<SchoolRepository> createRepository() async {
-    return SchoolRepository(
-        schoolService: SchoolServiceFacade(
-            clientManager: OAuth2Service(
+    final schoolServiceFacade = SchoolServiceFacade(
+        clientManager: OAuth2Service(
       authorizationEndpoint: Environment.authorizationEndpoint,
       redirectUrl: Environment.redirectUrl,
       tokenEndpoint: Environment.tokenEndpoint,
@@ -42,6 +41,10 @@ class SchoolRepositoryFactory {
 
         return resultUri;
       },
-    )));
+    ));
+
+    await schoolServiceFacade.init();
+
+    return SchoolRepository(schoolService: schoolServiceFacade);
   }
 }

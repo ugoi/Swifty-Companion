@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:swifty_companion/entities/search_user.dart';
+import 'package:swifty_companion/entities/user_data.dart';
 import 'package:swifty_companion/paths.dart';
 import 'package:swifty_companion/school_repository.dart';
 
 class SchoolModel extends ChangeNotifier {
-  final SchoolRepository _schoolRepository;
-
-  PathEnum _initialRoute = PathEnum.splash;
-
   SchoolModel({required SchoolRepository schoolRepository})
       : _schoolRepository = schoolRepository;
 
+  final SchoolRepository _schoolRepository;
+  PathEnum _initialRoute = PathEnum.splash;
+  List<SearchUser> _searchUsers = [];
+  Future<UserData>? _userData;
+
   String get test => "Test";
+
+  List<SearchUser> get searchUsers => _searchUsers;
+
+  Future<UserData>? get userData => _userData;
 
   Future<PathEnum> get initialRoute async {
     bool isAuth = await _schoolRepository.isAuthenticated();
@@ -29,5 +36,15 @@ class SchoolModel extends ChangeNotifier {
 
   Future<void> logout() async {
     await _schoolRepository.logout();
+  }
+
+  Future<void> onSearchSubmitted(String query) async {
+    _searchUsers = await _schoolRepository.searchUsers(query.trim());
+    notifyListeners();
+  }
+
+  Future<void> onSearchUserClicked(String id) async {
+    _userData = _schoolRepository.getUserData(id);
+    notifyListeners();
   }
 }
