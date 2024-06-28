@@ -40,6 +40,7 @@ class ProfileEntity {
   final Level level;
   final String location;
   final UserImage profilePicture;
+  final String address;
 
   ProfileEntity(
       {String? login,
@@ -48,13 +49,15 @@ class ProfileEntity {
       String? email,
       Level? level,
       String? location,
+      String? address,
       required this.profilePicture})
       : login = login ?? _notFound,
         firstName = firstName ?? _notFound,
         lastName = lastName ?? _notFound,
         email = email ?? _notFound,
         level = level ?? Level(level: 0, maxLevel: 20),
-        location = location ?? 'Unavailable';
+        location = location ?? 'Unavailable',
+        address = address ?? _notFound;
 
   factory ProfileEntity.fromUserDto(user_dto.UserDto userDto) {
     const defaultImageUrl = "assets/defaultProfilePicture.png";
@@ -65,7 +68,8 @@ class ProfileEntity {
         email: userDto.email,
         level: Level(level: userDto.getLevel(), maxLevel: 20),
         location: userDto.location,
-        profilePicture: UserImage(url: userDto.url ?? defaultImageUrl));
+        profilePicture: UserImage(url: userDto.url ?? defaultImageUrl),
+        address: userDto.campus?.last.address);
   }
 }
 

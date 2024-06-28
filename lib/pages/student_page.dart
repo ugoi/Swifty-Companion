@@ -148,7 +148,7 @@ class Profile extends StatelessWidget {
             InfoCard(
               icon: Icon(Icons.location_on,
                   color: Theme.of(context).colorScheme.primary),
-              text: Text(profile.location),
+              text: Text(profile.address),
             ),
           ],
         )
