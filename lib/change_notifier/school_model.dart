@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swifty_companion/entities/search_user.dart';
 import 'package:swifty_companion/entities/user_data.dart';
 import 'package:swifty_companion/paths.dart';
-import 'package:swifty_companion/school_repository.dart';
+import 'package:swifty_companion/repository/school_repository.dart';
 
 class SchoolModel extends ChangeNotifier {
   SchoolModel({required SchoolRepository schoolRepository})

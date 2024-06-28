@@ -23,4 +23,8 @@ class SchoolDataService {
 
     return searchUserDtoFromJson(response.body);
   }
+
+  Future<List<SearchUserDto>> getAllSearchUsers() async {
+    return [SearchUserDto()];
+  }
 }

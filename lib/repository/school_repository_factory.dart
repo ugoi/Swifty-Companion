@@ -3,9 +3,9 @@ import 'package:app_links/app_links.dart';
 import 'package:file/local.dart';
 import 'package:logging/logging.dart';
 import 'package:swifty_companion/environment.dart';
-import 'package:swifty_companion/o_auth2_service.dart';
-import 'package:swifty_companion/school_repository.dart';
-import 'package:swifty_companion/school_service_facade.dart';
+import 'package:swifty_companion/service/o_auth2_service.dart';
+import 'package:swifty_companion/repository/school_repository.dart';
+import 'package:swifty_companion/service/school_service_facade.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SchoolRepositoryFactory {

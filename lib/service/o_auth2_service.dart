@@ -1,5 +1,5 @@
 import 'package:file/file.dart';
-import 'package:swifty_companion/i_auth_service.dart';
+import 'package:swifty_companion/service/i_auth_service.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:http/http.dart' as http;
 

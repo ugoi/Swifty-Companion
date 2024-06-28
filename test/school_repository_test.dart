@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -6,8 +8,8 @@ import 'package:swifty_companion/dtos/user_dto.dart' as user_dto;
 import 'package:swifty_companion/entities/search_user.dart';
 import 'package:swifty_companion/entities/user_data.dart';
 import 'package:swifty_companion/entities/user_image.dart';
-import 'package:swifty_companion/school_repository.dart';
-import 'package:swifty_companion/school_service_facade.dart';
+import 'package:swifty_companion/repository/school_repository.dart';
+import 'package:swifty_companion/service/school_service_facade.dart';
 import 'package:swifty_companion/logging_setup.dart';
 
 class MockSchoolService extends Mock implements SchoolServiceFacade {}
@@ -86,7 +88,7 @@ void main() {
         expect(profile.firstName, expectedProfile.firstName);
         expect(profile.lastName, expectedProfile.lastName);
         expect(profile.email, expectedProfile.email);
-        expect(profile.level, expectedProfile.level);
+        expect(profile.level.level, expectedProfile.level.level);
         expect(profile.location, expectedProfile.location);
         expect(profile.profilePicture.url, expectedProfile.profilePicture.url);
       });
@@ -184,6 +186,27 @@ void main() {
         when(() => mockSchoolService.searchUsers(any())).thenThrow(TypeError());
 
         expect(schoolRepository.searchUsers("sdukic"), throwsException);
+      });
+    });
+
+    group('searchUsersLocally', () {
+      test('returns correct search result', () async {
+        final file = File('test/data/all_search_users.json');
+
+        when(() => mockSchoolService.getAllSearchUsers()).thenAnswer(
+            (_) async => Future.value(
+                search_dto.searchUserDtoFromJson(await file.readAsString())));
+
+        final searchUsers =
+            await schoolRepository.searchUsersLocally('yulpark');
+
+        final searchUsersMultiple =
+            await schoolRepository.searchUsersLocally('dn');
+
+        expect(searchUsers[0].login, 'yulpark');
+        expect(searchUsersMultiple.length, 2);
+        expect(searchUsersMultiple.map((user) => user.login).toList(),
+            containsAll(['dnixdorf', 'dna']));
       });
     });
   });

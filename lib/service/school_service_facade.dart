@@ -1,8 +1,8 @@
 import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/dtos/user_dto.dart';
-import 'package:swifty_companion/i_auth_service.dart';
+import 'package:swifty_companion/service/i_auth_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:swifty_companion/school_data_service.dart';
+import 'package:swifty_companion/service/school_data_service.dart';
 
 class SchoolServiceFacade {
   final IAuthService _authService;
@@ -44,5 +44,9 @@ class SchoolServiceFacade {
       throw Exception("Not logged in");
     }
     return _schoolDataService!.searchUsers(query);
+  }
+
+  Future<List<SearchUserDto>> getAllSearchUsers() async {
+    return _schoolDataService!.getAllSearchUsers();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/i_auth_service.dart';
-import 'package:swifty_companion/school_service_facade.dart';
+import 'package:swifty_companion/service/i_auth_service.dart';
+import 'package:swifty_companion/service/school_service_facade.dart';
 import 'package:swifty_companion/logging_setup.dart';
 import 'package:http/http.dart' as http;
 

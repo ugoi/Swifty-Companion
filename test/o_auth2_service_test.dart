@@ -1,7 +1,7 @@
 import 'package:file/memory.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/o_auth2_service.dart';
+import 'package:swifty_companion/service/o_auth2_service.dart';
 import 'package:http/http.dart' as http;
 
 class MockHttpClient extends Mock implements http.Client {}

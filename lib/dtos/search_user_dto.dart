@@ -14,14 +14,14 @@ String searchUserDtoToJson(List<SearchUserDto> data) =>
 class SearchUserDto {
   int? id;
   String? email;
-  String? login;
+  String login;
   String? firstName;
   String? lastName;
   String? usualFullName;
   dynamic usualFirstName;
   String? url;
   String? phone;
-  String? displayname;
+  String displayname;
   String? kind;
   Image? image;
   bool? staff;
@@ -41,14 +41,14 @@ class SearchUserDto {
   SearchUserDto({
     this.id,
     this.email,
-    this.login,
+    String? login,
     this.firstName,
     this.lastName,
     this.usualFullName,
     this.usualFirstName,
     this.url,
     this.phone,
-    this.displayname,
+    String? displayname,
     this.kind,
     this.image,
     this.staff,
@@ -64,7 +64,8 @@ class SearchUserDto {
     this.alumnizedAt,
     this.alumni,
     this.active,
-  });
+  })  : login = login ?? '',
+        displayname = displayname ?? '';
 
   factory SearchUserDto.fromJson(Map<String, dynamic> json) => SearchUserDto(
         id: json["id"],
