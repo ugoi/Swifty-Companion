@@ -15,9 +15,13 @@ class UserData {
 
   factory UserData.fromUserDto(user_dto.UserDto userDto) {
     final profile = ProfileEntity.fromUserDto(userDto);
-    final skills = userDto.cursusUsers
-        ?.firstWhere((element) => element.grade == "Member")
-        .skills
+
+    final cursusUser = userDto.cursusUsers?.firstWhere(
+      (element) => element.grade == "Member",
+      orElse: () => user_dto.CursusUser(),
+    );
+
+    final skills = cursusUser?.skills
         ?.map((skill) => SkillEntity.fromSkillDto(skill))
         .toList();
 

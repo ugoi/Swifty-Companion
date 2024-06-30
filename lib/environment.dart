@@ -53,7 +53,8 @@ class Environment {
         directory = await getApplicationDocumentsDirectory();
       } catch (e) {
         // Log the error or handle it appropriately
-        _logger.severe('Error getting application documents directory: $e');
+        _logger.severe(
+            'Web is not supported! Error getting application documents directory: $e');
       }
     }
 
@@ -62,6 +63,28 @@ class Environment {
     final credentialsFileName = dotenv.env['CREDENTIALS_FILE_NAME'] ?? '';
 
     final credentialsFilePath = '$path/$credentialsFileName';
+    return credentialsFilePath;
+  }
+
+  static Future<String> get searchUsersFilePath async {
+    Directory? directory;
+
+    if (!kIsWeb) {
+      try {
+        directory = await getApplicationDocumentsDirectory();
+      } catch (e) {
+        // Log the error or handle it appropriately
+        _logger.severe(
+            'Web is not supported! Error getting application documents directory: $e');
+      }
+    }
+
+    final path = directory?.path ?? '';
+
+    final credentialsFileName = dotenv.env['SEARCH_USERS_FILE_PATH'] ?? '';
+
+    final credentialsFilePath = '$path/$credentialsFileName';
+
     return credentialsFilePath;
   }
 }

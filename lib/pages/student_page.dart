@@ -173,7 +173,7 @@ class InfoCard extends StatelessWidget {
       children: [
         icon ?? const SizedBox.shrink(),
         if (icon != null && text != null) const SizedBox(width: 7),
-        text ?? const SizedBox.shrink(),
+        Flexible(child: text ?? const SizedBox.shrink()),
       ],
     );
   }
@@ -209,26 +209,30 @@ class Portfolio extends StatelessWidget {
               Expanded(
                 child: TabBarView(children: <Widget>[
                   Center(
-                    child: ListView.builder(
-                        padding: const EdgeInsets.all(8),
-                        itemCount: projects.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Project(
-                              title: projects[index].name,
-                              score: projects[index].mark.toPercentage());
-                        }),
+                    child: projects.length == 0
+                        ? Text("no projects were found")
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(8),
+                            itemCount: projects.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Project(
+                                  title: projects[index].name,
+                                  score: projects[index].mark.toPercentage());
+                            }),
                   ),
                   Center(
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(8),
-                          itemCount: skills.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Skill(
-                              title: skills[index].name,
-                              score: skills[index].level.level,
-                              score2: skills[index].level.toPercentage(),
-                            );
-                          }))
+                      child: skills.length == 0
+                          ? Text("no skills were found")
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(8),
+                              itemCount: skills.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Skill(
+                                  title: skills[index].name,
+                                  score: skills[index].level.level,
+                                  score2: skills[index].level.toPercentage(),
+                                );
+                              }))
                 ]),
               ),
             ],

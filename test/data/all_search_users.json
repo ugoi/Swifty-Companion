@@ -1,6 +1,41 @@
 [
   {
     "id": 191522,
+    "email": "adnixdorf@student.42wolfsburg.de",
+    "login": "adnixdorf",
+    "first_name": "Adoreen",
+    "last_name": "Nixdorf",
+    "usual_full_name": "Adoreen Nixdorf",
+    "usual_first_name": null,
+    "url": "https://api.intra.42.fr/v2/users/dnixdorf",
+    "phone": "hidden",
+    "displayname": "Adoreen Nixdorf",
+    "kind": "student",
+    "image": {
+      "link": "https://cdn.intra.42.fr/users/a89f943700d2ce743edba2f81988181c/dnixdorf.jpg",
+      "versions": {
+        "large": "https://cdn.intra.42.fr/users/7473b6c0e3b845c7c762d3119b67759b/large_dnixdorf.jpg",
+        "medium": "https://cdn.intra.42.fr/users/2b531ea3b27d4724b052e5c7f018c515/medium_dnixdorf.jpg",
+        "small": "https://cdn.intra.42.fr/users/b5af05166d18e1ec08dc9e5894fed5b9/small_dnixdorf.jpg",
+        "micro": "https://cdn.intra.42.fr/users/e7d1751aa7da8c20dd3bb936c21d74ee/micro_dnixdorf.jpg"
+      }
+    },
+    "staff?": false,
+    "correction_point": 5,
+    "pool_month": "july",
+    "pool_year": "2024",
+    "location": null,
+    "wallet": 0,
+    "anonymize_date": "2027-06-28T00:00:00.000+02:00",
+    "data_erasure_date": "2027-06-28T00:00:00.000+02:00",
+    "created_at": "2024-06-28T11:04:12.144Z",
+    "updated_at": "2024-06-28T11:04:12.914Z",
+    "alumnized_at": null,
+    "alumni?": false,
+    "active?": false
+  },
+  {
+    "id": 191522,
     "email": "dnixdorf@student.42wolfsburg.de",
     "login": "dnixdorf",
     "first_name": "Doreen",

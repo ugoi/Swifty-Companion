@@ -1,3 +1,4 @@
+import 'package:swifty_companion/algo/searchUsersAlgo.dart';
 import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/dtos/user_dto.dart';
 import 'package:swifty_companion/service/i_auth_service.dart';
@@ -14,13 +15,15 @@ class SchoolServiceFacade {
   Future<void> init() async {
     if (await isAuthenticated()) {
       http.BaseClient client = await _authService.createClient();
-      _schoolDataService = SchoolDataService(client: client);
+      _schoolDataService =
+          SchoolDataService(client: client, searchUsersAlgo: SearchUsersAlgo());
     }
   }
 
   Future<void> loginWith42() async {
     http.BaseClient client = await _authService.createClient();
-    _schoolDataService = SchoolDataService(client: client);
+    _schoolDataService =
+        SchoolDataService(client: client, searchUsersAlgo: SearchUsersAlgo());
     return;
   }
 
@@ -43,10 +46,10 @@ class SchoolServiceFacade {
     if (_schoolDataService == null) {
       throw Exception("Not logged in");
     }
-    return _schoolDataService!.searchUsers(query);
+    return _schoolDataService!.searchUsers(query, true);
   }
 
-  Future<List<SearchUserDto>> getAllSearchUsers() async {
-    return _schoolDataService!.getAllSearchUsers();
-  }
+  // Future<List<SearchUserDto>> getAllSearchUsers() async {
+  //   return _schoolDataService!.getAllSearchUsers();
+  // }
 }

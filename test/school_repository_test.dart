@@ -188,26 +188,5 @@ void main() {
         expect(schoolRepository.searchUsers("sdukic"), throwsException);
       });
     });
-
-    group('searchUsersLocally', () {
-      test('returns correct search result', () async {
-        final file = File('test/data/all_search_users.json');
-
-        when(() => mockSchoolService.getAllSearchUsers()).thenAnswer(
-            (_) async => Future.value(
-                search_dto.searchUserDtoFromJson(await file.readAsString())));
-
-        final searchUsers =
-            await schoolRepository.searchUsersLocally('yulpark');
-
-        final searchUsersMultiple =
-            await schoolRepository.searchUsersLocally('dn');
-
-        expect(searchUsers[0].login, 'yulpark');
-        expect(searchUsersMultiple.length, 2);
-        expect(searchUsersMultiple.map((user) => user.login).toList(),
-            containsAll(['dnixdorf', 'dna']));
-      });
-    });
   });
 }
