@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 import 'package:file/local.dart';
 import 'package:flutter/services.dart';
-import 'package:swifty_companion/algo/searchUsersAlgo.dart';
+import 'package:swifty_companion/algo/search_users_algo.dart';
 import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/dtos/user_dto.dart';
 import 'package:http/http.dart' as http;

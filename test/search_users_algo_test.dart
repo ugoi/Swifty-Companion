@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/algo/searchUsersAlgo.dart';
+import 'package:swifty_companion/algo/search_users_algo.dart';
 import 'package:swifty_companion/dtos/search_user_dto.dart';
-import 'package:swifty_companion/service/i_auth_service.dart';
-import 'package:swifty_companion/service/school_data_service.dart';
 import 'package:swifty_companion/logging_setup.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
   late SearchUsersAlgo searchUsersAlgo;

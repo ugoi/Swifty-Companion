@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/algo/searchUsersAlgo.dart';
+import 'package:swifty_companion/algo/search_users_algo.dart';
 import 'package:swifty_companion/service/i_auth_service.dart';
 import 'package:swifty_companion/service/school_data_service.dart';
 import 'package:swifty_companion/logging_setup.dart';
@@ -32,7 +32,7 @@ void main() {
       test('calls 42 api and returns json', () async {
         final file = File('test/data/search_user.json');
         final json = jsonDecode(await file.readAsString());
-        final String query = "sdukic";
+        const String query = "sdukic";
 
         when(() => mockBaseClient.get(any())).thenAnswer(
             (invocation) async => http.Response(jsonEncode(json), 200));

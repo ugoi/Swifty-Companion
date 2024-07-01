@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -59,27 +57,25 @@ void main() {
             firstName: "testFirstName",
             lastName: "testLastName",
             email: "testEmail",
-            level: Level(level: 9, maxLevel: 20),
+            level: UserLevel(level: 9),
             location: "testLocation",
             profilePicture: const UserImage(url: "testUrl"));
 
-        when(() => mockSchoolService.getUser("1"))
-            .thenAnswer((_) async => Future.value(user_dto.UserDto(
-                  login: expectedProfile.login,
-                  firstName: expectedProfile.firstName,
-                  lastName: expectedProfile.lastName,
-                  email: expectedProfile.email,
-                  cursusUsers: [
-                    user_dto.CursusUser(
-                        level: Random().nextDouble(), grade: null),
-                    user_dto.CursusUser(
-                        level: Random().nextDouble(), grade: "Empty"),
-                    user_dto.CursusUser(
-                        level: expectedProfile.level.level, grade: "Member"),
-                  ],
-                  location: expectedProfile.location,
-                  url: expectedProfile.profilePicture.url,
-                )));
+        when(() => mockSchoolService.getUser("1")).thenAnswer((_) async =>
+            Future.value(user_dto.UserDto(
+              login: expectedProfile.login,
+              firstName: expectedProfile.firstName,
+              lastName: expectedProfile.lastName,
+              email: expectedProfile.email,
+              cursusUsers: [
+                user_dto.CursusUser(level: Random().nextDouble(), grade: null),
+                user_dto.CursusUser(level: Random().nextDouble(), grade: null),
+                user_dto.CursusUser(
+                    level: expectedProfile.level.level, grade: "Member"),
+              ],
+              location: expectedProfile.location,
+              image: user_dto.Image(link: expectedProfile.profilePicture.url),
+            )));
 
         final result = await schoolRepository.getUserData("1");
         final profile = result.profile;
@@ -104,7 +100,7 @@ void main() {
 
         when(() => mockSchoolService.getUser("1")).thenAnswer(
             (_) async => Future.value(user_dto.UserDto(cursusUsers: [
-                  user_dto.CursusUser(grade: "AntiMember", skills: [
+                  user_dto.CursusUser(grade: null, skills: [
                     user_dto.Skill(id: 2, name: "AntiTest1", level: 5.68),
                     user_dto.Skill(id: 3, name: "AntiTest2", level: 6.68),
                   ]),

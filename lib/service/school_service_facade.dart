@@ -1,4 +1,4 @@
-import 'package:swifty_companion/algo/searchUsersAlgo.dart';
+import 'package:swifty_companion/algo/search_users_algo.dart';
 import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/dtos/user_dto.dart';
 import 'package:swifty_companion/service/i_auth_service.dart';
@@ -46,7 +46,7 @@ class SchoolServiceFacade {
     if (_schoolDataService == null) {
       throw Exception("Not logged in");
     }
-    return _schoolDataService!.searchUsers(query, true);
+    return _schoolDataService!.searchUsers(query, false);
   }
 
   // Future<List<SearchUserDto>> getAllSearchUsers() async {

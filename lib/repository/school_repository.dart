@@ -1,7 +1,5 @@
-import 'dart:math';
 
 import 'package:logging/logging.dart';
-import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/entities/search_user.dart';
 import 'package:swifty_companion/entities/user_data.dart';
 import 'package:swifty_companion/entities/user_image.dart';

@@ -17,7 +17,7 @@ class UserData {
     final profile = ProfileEntity.fromUserDto(userDto);
 
     final cursusUser = userDto.cursusUsers?.firstWhere(
-      (element) => element.grade == "Member",
+      (element) => element.grade != null,
       orElse: () => user_dto.CursusUser(),
     );
 
@@ -41,7 +41,7 @@ class ProfileEntity {
   final String lastName;
   final String email;
   // final double? level;
-  final Level level;
+  final UserLevel level;
   final String location;
   final UserImage profilePicture;
   final String address;
@@ -51,7 +51,7 @@ class ProfileEntity {
       String? firstName,
       String? lastName,
       String? email,
-      Level? level,
+      UserLevel? level,
       String? location,
       String? address,
       required this.profilePicture})
@@ -59,7 +59,7 @@ class ProfileEntity {
         firstName = firstName ?? _notFound,
         lastName = lastName ?? _notFound,
         email = email ?? _notFound,
-        level = level ?? Level(level: 0, maxLevel: 20),
+        level = level ?? UserLevel(level: 0),
         location = location ?? 'Unavailable',
         address = address ?? _notFound;
 
@@ -70,9 +70,9 @@ class ProfileEntity {
         firstName: userDto.firstName,
         lastName: userDto.lastName,
         email: userDto.email,
-        level: Level(level: userDto.getLevel(), maxLevel: 20),
+        level: UserLevel(level: userDto.getLevel()),
         location: userDto.location,
-        profilePicture: UserImage(url: userDto.url ?? defaultImageUrl),
+        profilePicture: UserImage(url: userDto.image?.link ?? defaultImageUrl),
         address: userDto.campus?.last.address);
   }
 }
@@ -126,6 +126,22 @@ class Level {
 
   factory Level.fromPercentage({required double percentage}) {
     return Level(level: percentage, maxLevel: 100);
+  }
+}
+
+class UserLevel {
+  final double level;
+
+  UserLevel({double? level}) : level = level ?? 0;
+
+  double getFractionalPartPercentage() {
+    double fraction = level - level.truncate();
+    double percent = fraction * 100;
+    return percent;
+  }
+
+  int getIntegerPart() {
+    return level.truncate();
   }
 }
 

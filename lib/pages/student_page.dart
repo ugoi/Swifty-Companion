@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:swifty_companion/custom_icons.dart';
 import 'package:swifty_companion/change_notifier/school_model.dart';
 import 'package:swifty_companion/entities/user_data.dart';
 
@@ -93,13 +92,26 @@ class Profile extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 60,
+          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).colorScheme.surfaceContainer,
           ),
           child: Row(
             children: [
-              Image.network(CustomIcons.avatar),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        alignment: FractionalOffset.topCenter,
+                        image: NetworkImage(profile.profilePicture.url),
+                      )),
+                    )),
+              ),
               const SizedBox(
                 width: 8,
               ),
@@ -120,7 +132,7 @@ class Profile extends StatelessWidget {
         ),
         LinearPercentIndicator(
           center: Text(
-              "level ${profile.level.level.toStringAsFixed(0)} - ${profile.level.toPercentage().toStringAsFixed(0)}%"),
+              "level ${profile.level.getIntegerPart()} - ${profile.level.getFractionalPartPercentage().toStringAsFixed(0)}%"),
           padding: EdgeInsets.zero,
           barRadius: const Radius.circular(15),
           lineHeight: 20,
@@ -209,8 +221,8 @@ class Portfolio extends StatelessWidget {
               Expanded(
                 child: TabBarView(children: <Widget>[
                   Center(
-                    child: projects.length == 0
-                        ? Text("no projects were found")
+                    child: projects.isEmpty
+                        ? const Text("no projects were found")
                         : ListView.builder(
                             padding: const EdgeInsets.all(8),
                             itemCount: projects.length,
@@ -221,8 +233,8 @@ class Portfolio extends StatelessWidget {
                             }),
                   ),
                   Center(
-                      child: skills.length == 0
-                          ? Text("no skills were found")
+                      child: skills.isEmpty
+                          ? const Text("no skills were found")
                           : ListView.builder(
                               padding: const EdgeInsets.all(8),
                               itemCount: skills.length,

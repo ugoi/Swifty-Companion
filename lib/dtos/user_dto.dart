@@ -251,7 +251,7 @@ class UserDto {
     final cursusUsers = this.cursusUsers;
     if (cursusUsers == null) return null;
     final cursusUser = cursusUsers.firstWhere(
-        (element) => element.grade == "Member",
+        (element) => element.grade != null,
         orElse: () => CursusUser());
     return cursusUser.level;
   }
