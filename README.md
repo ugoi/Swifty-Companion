@@ -56,7 +56,7 @@ Turn in your assignment in your Git repository. Only the work inside your reposi
 
 ## Screenshots
 
-![Login Screen](screenshots/login_screen.png | width=300)
-![Search Screen](screenshots/search_screen.png | width=300)
-![Student Projects Screen](screenshots/student_projects_screen.png width=300)
-![Student Skills Screen](screenshots/student_skills_screen.png width=300)
+<img src="screenshots/login_screen.png" width="300">
+<img src="screenshots/search_screen.png" width="300">
+<img src="screenshots/student_projects_screen.png" width="300">
+<img src="screenshots/student_skills_screen.png" width="300">
