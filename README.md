@@ -56,13 +56,13 @@ Turn in your assignment in your Git repository. Only the work inside your reposi
 
 ## Screenshots
 
-<table>
+<table width="100%">
   <tr>
-    <td><img src="screenshots/login_screen.png" width="300"></td>
-    <td><img src="screenshots/search_screen.png" width="300"></td>
+    <td width="50%"><img src="screenshots/login_screen.png" width="100%"></td>
+    <td width="50%"><img src="screenshots/search_screen.png" width="100%"></td>
   </tr>
   <tr>
-    <td><img src="screenshots/student_projects_screen.png" width="300"></td>
-    <td><img src="screenshots/student_skills_screen.png" width="300"></td>
+    <td width="50%"><img src="screenshots/student_projects_screen.png" width="100%"></td>
+    <td width="50%"><img src="screenshots/student_skills_screen.png" width="100%"></td>
   </tr>
 </table>
