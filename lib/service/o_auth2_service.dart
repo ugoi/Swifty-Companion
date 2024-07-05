@@ -1,4 +1,5 @@
 import 'package:file/file.dart';
+import 'package:logging/logging.dart';
 import 'package:swifty_companion/service/i_auth_service.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:http/http.dart' as http;
@@ -14,6 +15,7 @@ class OAuth2Service implements IAuthService {
   final Uri _redirectUrl;
   final String _credentialsFilePath;
   final http.Client? _httpClient;
+  final Logger _logger = Logger("OAuth2Service");
 
   OAuth2Service(
       {required Future<void> Function(Uri uri) redirect,
@@ -92,8 +94,9 @@ class OAuth2Service implements IAuthService {
       await credentialsFile.writeAsString(client.credentials.toJson());
 
       return client;
-    } catch (e) {
-      throw Exception('Failed to create OAuth2 client: $e');
+    } catch (e, stackTrace) {
+      _logger.severe('Error creating OAuth2 client', e, stackTrace);
+      rethrow;
     }
   }
 
