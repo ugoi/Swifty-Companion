@@ -34,19 +34,6 @@ class MyApp extends StatelessWidget {
         theme: darkMode,
         initialRoute: PathEnum.splash.path,
         onGenerateRoute: (settings) {
-          // switch (settings.name) {
-          //   case Paths.login:
-          //     return _createLoginPageRoute();
-          //   case Paths.search:
-          //     return MaterialPageRoute(
-          //         builder: (context) => const SearchPage());
-          //   case Paths.splash:
-          //     return MaterialPageRoute(
-          //         builder: (context) => const SplashPage());
-          //   default:
-          //     return null;
-          // }
-
           if (settings.name == PathEnum.login.path) {
             return _createLoginPageRoute();
           } else if (settings.name == PathEnum.search.path) {

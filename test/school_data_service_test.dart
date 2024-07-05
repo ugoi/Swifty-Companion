@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:swifty_companion/algo/search_users_algo.dart';
 import 'package:swifty_companion/service/i_auth_service.dart';
 import 'package:swifty_companion/service/school_data_service.dart';
 import 'package:swifty_companion/logging_setup.dart';
@@ -19,7 +18,7 @@ void main() {
   setUp(() {
     mockBaseClient = MockBaseClient();
     schoolService = SchoolDataService(
-        client: mockBaseClient, searchUsersAlgo: SearchUsersAlgo());
+        client: mockBaseClient);
   });
 
   setUpAll(() {
@@ -43,27 +42,6 @@ void main() {
         expect(users[0].login, "sdukic");
       });
     });
-
-    // group('searchUsersLocally', () {
-    //   test('returns correct search result', () async {
-    //     final file = File('test/data/all_search_users.json');
-    //     final json = jsonDecode(await file.readAsString());
-
-    //     when(() => mockBaseClient.get(any())).thenAnswer(
-    //         (invocation) async => http.Response(jsonEncode(json), 200));
-
-    //     final searchUsers =
-    //         await schoolService.searchUsers('yulpark');
-
-    //     final searchUsersMultiple =
-    //         await schoolService.searchUsers('dn');
-
-    //     expect(searchUsers[0].login, 'yulpark');
-    //     expect(searchUsersMultiple.length, 2);
-    //     expect(searchUsersMultiple.map((user) => user.login).toList(),
-    //         containsAll(['dnixdorf', 'dna']));
-    //   });
-    // });
 
     group('get user', () {
       test('calls 42 api and returns json', () async {

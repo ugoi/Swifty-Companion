@@ -1,6 +1,5 @@
 import 'package:file/local.dart';
 import 'package:flutter/services.dart';
-import 'package:swifty_companion/algo/search_users_algo.dart';
 import 'package:swifty_companion/dtos/search_user_dto.dart';
 import 'package:swifty_companion/dtos/user_dto.dart';
 import 'package:http/http.dart' as http;
@@ -8,50 +7,27 @@ import 'package:swifty_companion/environment.dart';
 
 class SchoolDataService {
   final http.BaseClient _client;
-  final SearchUsersAlgo _searchUsersAlgo;
 
-  SchoolDataService(
-      {required http.BaseClient client,
-      required SearchUsersAlgo searchUsersAlgo})
-      : _client = client,
-        _searchUsersAlgo = searchUsersAlgo;
+  SchoolDataService({required http.BaseClient client}) : _client = client;
 
   Future<UserDto> getUser(String id) async {
-    final response = await _client.get(Uri(
-        scheme: 'https', host: 'api.intra.42.fr', path: '/v2/users/$id'));
+    final response = await _client.get(
+        Uri(scheme: 'https', host: 'api.intra.42.fr', path: '/v2/users/$id'));
 
     return userDtoFromJson(response.body);
   }
 
-  // Future<List<SearchUserDto>> searchUsers(String query) async {
-  //   final response = await _client.get(Uri(
-  //       scheme: 'https',
-  //       host: 'api.intra.42.fr',
-  //       path: '/v2/users',
-  //       queryParameters: {'filter[login]': query, 'filter[kind]': 'student'}));
-
-  //   return searchUserDtoFromJson(response.body);
-  // }
-
-  Future<List<SearchUserDto>> searchUsers(String query,
-      [bool searchLocally = false]) async {
+  Future<List<SearchUserDto>> searchUsers(
+    String query,
+  ) async {
     List<SearchUserDto> searchUserDtos;
-    if (searchLocally) {
-      searchUserDtos = (await _getAllSearchUsers(query));
-      searchUserDtos =
-          await _searchUsersAlgo.searchUsers(query, searchUserDtos);
-    } else {
-      final response = await _client.get(Uri(
-          scheme: 'https',
-          host: 'api.intra.42.fr',
-          path: '/v2/users',
-          queryParameters: {
-            'filter[login]': query,
-            'filter[kind]': 'student'
-          }));
+    final response = await _client.get(Uri(
+        scheme: 'https',
+        host: 'api.intra.42.fr',
+        path: '/v2/users',
+        queryParameters: {'filter[login]': query, 'filter[kind]': 'student'}));
 
-      searchUserDtos = searchUserDtoFromJson(response.body);
-    }
+    searchUserDtos = searchUserDtoFromJson(response.body);
 
     //     .where((e) =>
     //         (_containsQuery(query, e.login)) ||
