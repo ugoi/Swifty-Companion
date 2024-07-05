@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
       final school = Provider.of<SchoolModel>(context, listen: false);
-      school.initialRoute.then((value) {
+      school.initialRoute().then((value) {
         Navigator.pushReplacementNamed(context, value.path);
       });
     });

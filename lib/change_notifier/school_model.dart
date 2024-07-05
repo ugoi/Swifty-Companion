@@ -13,13 +13,11 @@ class SchoolModel extends ChangeNotifier {
   List<SearchUser> _searchUsers = [];
   Future<UserData>? _userData;
 
-  String get test => "Test";
-
   List<SearchUser> get searchUsers => _searchUsers;
 
   Future<UserData>? get userData => _userData;
 
-  Future<PathEnum> get initialRoute async {
+  Future<PathEnum> initialRoute() async {
     bool isAuth = await _schoolRepository.isAuthenticated();
 
     if (isAuth) {
