@@ -7,8 +7,8 @@ import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/student_page.dart';
 import 'package:swifty_companion/paths.dart';
 import 'package:swifty_companion/change_notifier/school_model.dart';
-import 'package:swifty_companion/repository/school_repository_factory.dart';
 import 'package:swifty_companion/pages/splash_page.dart';
+import 'package:swifty_companion/service/school_service_facade.dart';
 import 'package:swifty_companion/theme/theme.dart';
 
 Future main() async {
@@ -16,9 +16,9 @@ Future main() async {
       .ensureInitialized(); // Just here in case, I dont know if it's needed.
   setupLogging();
   await Environment.init();
-  final schoolRepository = await SchoolRepositoryFactory.createRepository();
+  final schoolServiceFacade = await SchoolServiceFacade.create();
   runApp(ChangeNotifierProvider(
-    create: (context) => SchoolModel(schoolRepository: schoolRepository),
+    create: (context) => SchoolModel(schoolServiceFacade: schoolServiceFacade),
     child: const MyApp(),
   ));
 }

@@ -38,7 +38,7 @@ void main() {
 
         final users = await schoolService.searchUsers(query);
 
-        expect(users[0].id, 133113);
+        expect(users[0].id, "133113");
         expect(users[0].login, "sdukic");
       });
     });
