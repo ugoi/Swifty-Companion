@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                             color: Theme.of(context).colorScheme.surface),
                       ),
                       onPressed: () async {
-                        await school?.login();
+                        await school.login();
                         if (context.mounted) {
                           Navigator.pushNamed(context, PathEnum.search.path);
                         }

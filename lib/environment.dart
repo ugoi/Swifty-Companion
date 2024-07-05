@@ -12,8 +12,8 @@ class Environment {
     try {
       await dotenv.load(fileName: fileName);
       _logger.info('Environment variables loaded successfully');
-    } catch (e) {
-      _logger.severe('Error loading environment variables: $e');
+    } catch (e, stackTrace) {
+      _logger.severe('Error loading environment variables:', e, stackTrace);
       rethrow;
     }
   }
@@ -51,25 +51,11 @@ class Environment {
 
     directory = await getApplicationDocumentsDirectory();
 
-    final path = directory?.path ?? '';
+    final path = directory.path;
 
     final credentialsFileName = dotenv.env['CREDENTIALS_FILE_NAME'] ?? '';
 
     final credentialsFilePath = '$path/$credentialsFileName';
-    return credentialsFilePath;
-  }
-
-  static Future<String> get searchUsersFilePath async {
-    Directory? directory;
-
-    directory = await getApplicationDocumentsDirectory();
-
-    final path = directory?.path ?? '';
-
-    final credentialsFileName = dotenv.env['SEARCH_USERS_FILE_PATH']!;
-
-    final credentialsFilePath = '$path/$credentialsFileName';
-
     return credentialsFilePath;
   }
 }

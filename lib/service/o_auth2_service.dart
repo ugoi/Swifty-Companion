@@ -106,11 +106,7 @@ class OAuth2Service implements IAuthService {
     var exists = await credentialsFile.exists();
     // If the OAuth2 credentials have already been saved from a previous run, we
     // ust want to reload them.
-    if (exists) {
-      return true;
-    } else {
-      return false;
-    }
+    return exists;
   }
 
   @override
