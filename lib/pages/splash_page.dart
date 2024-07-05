@@ -26,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<SchoolModel?>(builder: (context, school, child) {
+    return Consumer<SchoolModel>(builder: (context, school, child) {
       return Directionality(
           textDirection: TextDirection.ltr,
           child: Scaffold(

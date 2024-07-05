@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<SchoolModel?>(builder: (context, school, child) {
+    return Consumer<SchoolModel>(builder: (context, school, child) {
       return Scaffold(
         body: Center(
           child: Column(
