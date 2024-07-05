@@ -27,35 +27,32 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<SchoolModel>(builder: (context, school, child) {
-      return Directionality(
-          textDirection: TextDirection.ltr,
-          child: Scaffold(
-            body: Center(
-              // Center is a layout widget. It takes a single child and positions it
-              // in the middle of the parent.
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SvgPicture.asset(
-                    CustomIcons.logo42,
-                    semanticsLabel: 'Acme Logo',
-                    fit: BoxFit.scaleDown,
-                    height: 60,
-                    width: 60,
-                    colorFilter: ColorFilter.mode(
-                        Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                  ),
-                  Text(
-                    'Swifty Companion',
-                    textDirection: TextDirection.ltr,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 24),
-                  )
-                ],
+      return Scaffold(
+        body: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SvgPicture.asset(
+                CustomIcons.logo42,
+                semanticsLabel: 'Acme Logo',
+                fit: BoxFit.scaleDown,
+                height: 60,
+                width: 60,
+                colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.primary, BlendMode.srcIn),
               ),
-            ),
-          ));
+              Text(
+                'Swifty Companion',
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary, fontSize: 24),
+              )
+            ],
+          ),
+        ),
+      );
     });
   }
 }
