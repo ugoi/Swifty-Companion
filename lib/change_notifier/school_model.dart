@@ -47,4 +47,8 @@ class SchoolModel extends ChangeNotifier {
     _userData = _schoolServiceFacade.getUser(id);
     notifyListeners();
   }
+
+  Future<UserData> getUserData(String id) async {
+    return _schoolServiceFacade.getUser(id);
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/pages/student_page.dart';
 import 'package:swifty_companion/paths.dart';
 import 'package:swifty_companion/change_notifier/school_model.dart';
 
@@ -40,9 +41,12 @@ class SearchPage extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, PathEnum.student.path);
-                          school.onSearchUserClicked(
-                              school.searchUsers[index].id);
+                          var userData =
+                              school.getUserData(school.searchUsers[index].id);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return StudentPage(userData: userData);
+                          }));
                         },
                         child:
                             SearchItem(title: school.searchUsers[index].login),

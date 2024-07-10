@@ -1,81 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:provider/provider.dart';
-import 'package:swifty_companion/change_notifier/school_model.dart';
 import 'package:swifty_companion/entities/user_data.dart';
 
 class StudentPage extends StatelessWidget {
-  const StudentPage({super.key});
+  const StudentPage({super.key, required this.userData});
+
+  final Future<UserData>? userData;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SchoolModel>(builder: (context, school, child) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          scrolledUnderElevation: 0.0,
-          leading: Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-                onPressed: () async {
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-                icon: const Icon(Icons.arrow_back),
-                label: const Text("Search")),
-          ),
-          leadingWidth: 300,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        scrolledUnderElevation: 0.0,
+        leading: Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+              onPressed: () async {
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              },
+              icon: const Icon(Icons.arrow_back),
+              label: const Text("Search")),
         ),
-        body: Center(
-            child: Padding(
-                padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
-                child: FutureBuilder(
-                    future: school.userData,
-                    builder: (context, snapshot) {
-                      List<Widget> children;
-                      if (snapshot.hasData) {
-                        children = [
-                          Profile(
-                            profile: snapshot.data!.profile,
-                          ),
-                          const SizedBox(height: 20),
-                          Portfolio(
-                              projects: snapshot.data!.projects,
-                              skills: snapshot.data!.skills)
-                        ];
-                      } else if (snapshot.hasError) {
-                        children = <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 60,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text('Error: ${snapshot.error}'),
-                          ),
-                        ];
-                      } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text('Awaiting result...'),
-                          ),
-                        ];
-                      }
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: children,
-                      );
-                    }))),
-      );
-    });
+        leadingWidth: 300,
+      ),
+      body: Center(
+          child: Padding(
+              padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
+              child: FutureBuilder(
+                  future: userData,
+                  builder: (context, snapshot) {
+                    List<Widget> children;
+                    if (snapshot.hasData) {
+                      children = [
+                        Profile(
+                          profile: snapshot.data!.profile,
+                        ),
+                        const SizedBox(height: 20),
+                        Portfolio(
+                            projects: snapshot.data!.projects,
+                            skills: snapshot.data!.skills)
+                      ];
+                    } else if (snapshot.hasError) {
+                      children = <Widget>[
+                        const Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text('Error: ${snapshot.error}'),
+                        ),
+                      ];
+                    } else {
+                      children = const <Widget>[
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text('Awaiting result...'),
+                        ),
+                      ];
+                    }
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: children,
+                    );
+                  }))),
+    );
   }
 }
 

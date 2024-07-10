@@ -4,7 +4,6 @@ import 'package:swifty_companion/environment.dart';
 import 'package:swifty_companion/pages/search_page.dart';
 import 'package:swifty_companion/logging_setup.dart';
 import 'package:swifty_companion/pages/login_page.dart';
-import 'package:swifty_companion/pages/student_page.dart';
 import 'package:swifty_companion/paths.dart';
 import 'package:swifty_companion/change_notifier/school_model.dart';
 import 'package:swifty_companion/pages/splash_page.dart';
@@ -40,8 +39,6 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => const SearchPage());
           } else if (settings.name == PathEnum.splash.path) {
             return MaterialPageRoute(builder: (context) => const SplashPage());
-          } else if (settings.name == PathEnum.student.path) {
-            return MaterialPageRoute(builder: (context) => const StudentPage());
           } else {
             return null;
           }
