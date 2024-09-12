@@ -842,7 +842,7 @@ class ProjectsUser {
         id: json["id"],
         occurrence: json["occurrence"],
         finalMark: json["final_mark"],
-        status: statusValues.map[json["status"]]!,
+        status: statusValues.map[json["status"]] ?? Status.IN_PROGRESS,
         validated: json["validated?"],
         currentTeamId: json["current_team_id"],
         project:
